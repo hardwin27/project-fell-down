@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ public class CharacterControlSystem : MonoBehaviour
     [SerializeField] private CharacterMovement movement;
     [SerializeField] private CharacterVisual visual;
     [SerializeField] private CharacterUnitDetector unitDetector;
+
+    public Action OnDie;
+
+    public CharacterEntity Entity { get => entity; }
 
     private void Awake()
     {
@@ -34,6 +39,7 @@ public class CharacterControlSystem : MonoBehaviour
 
     private void HandleCharacterDeath()
     {
-        Destroy(gameObject);
+        OnDie?.Invoke();
+        gameObject.SetActive(false);
     }
 }
